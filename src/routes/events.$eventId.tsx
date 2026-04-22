@@ -125,7 +125,7 @@ function EventDetail() {
             <div className="text-xs text-muted-foreground mt-1">{event.available.toLocaleString()} of {event.total.toLocaleString()} available</div>
 
             <div className="mt-5 space-y-3">
-              {event.tiers.map(t => {
+              {event.tiers.map((t: typeof event.tiers[number]) => {
                 const sold = t.sold >= t.quota;
                 return (
                   <button key={t.name} disabled={sold} className="w-full text-left p-4 rounded-xl border border-border hover:border-neon-blue/40 transition disabled:opacity-50 disabled:cursor-not-allowed bg-background/40">
