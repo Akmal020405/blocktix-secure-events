@@ -10,13 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConnectRouteImport } from './routes/connect'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
+import { Route as DashboardWalletRouteImport } from './routes/dashboard.wallet'
+import { Route as DashboardTransactionsRouteImport } from './routes/dashboard.transactions'
+import { Route as DashboardTicketsRouteImport } from './routes/dashboard.tickets'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as DashboardTicketsTicketIdRouteImport } from './routes/dashboard.tickets.$ticketId'
 
 const ExploreRoute = ExploreRouteImport.update({
   id: '/explore',
   path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConnectRoute = ConnectRouteImport.update({
@@ -29,42 +41,127 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const EventsEventIdRoute = EventsEventIdRouteImport.update({
   id: '/events/$eventId',
   path: '/events/$eventId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardWalletRoute = DashboardWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTransactionsRoute = DashboardTransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTicketsRoute = DashboardTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTicketsTicketIdRoute =
+  DashboardTicketsTicketIdRouteImport.update({
+    id: '/$ticketId',
+    path: '/$ticketId',
+    getParentRoute: () => DashboardTicketsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/connect': typeof ConnectRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/explore': typeof ExploreRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tickets': typeof DashboardTicketsRouteWithChildren
+  '/dashboard/transactions': typeof DashboardTransactionsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
   '/events/$eventId': typeof EventsEventIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/tickets/$ticketId': typeof DashboardTicketsTicketIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/connect': typeof ConnectRoute
   '/explore': typeof ExploreRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tickets': typeof DashboardTicketsRouteWithChildren
+  '/dashboard/transactions': typeof DashboardTransactionsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
   '/events/$eventId': typeof EventsEventIdRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/tickets/$ticketId': typeof DashboardTicketsTicketIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/connect': typeof ConnectRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/explore': typeof ExploreRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tickets': typeof DashboardTicketsRouteWithChildren
+  '/dashboard/transactions': typeof DashboardTransactionsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
   '/events/$eventId': typeof EventsEventIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/tickets/$ticketId': typeof DashboardTicketsTicketIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/connect' | '/explore' | '/events/$eventId'
+  fullPaths:
+    | '/'
+    | '/connect'
+    | '/dashboard'
+    | '/explore'
+    | '/dashboard/settings'
+    | '/dashboard/tickets'
+    | '/dashboard/transactions'
+    | '/dashboard/wallet'
+    | '/events/$eventId'
+    | '/dashboard/'
+    | '/dashboard/tickets/$ticketId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/connect' | '/explore' | '/events/$eventId'
-  id: '__root__' | '/' | '/connect' | '/explore' | '/events/$eventId'
+  to:
+    | '/'
+    | '/connect'
+    | '/explore'
+    | '/dashboard/settings'
+    | '/dashboard/tickets'
+    | '/dashboard/transactions'
+    | '/dashboard/wallet'
+    | '/events/$eventId'
+    | '/dashboard'
+    | '/dashboard/tickets/$ticketId'
+  id:
+    | '__root__'
+    | '/'
+    | '/connect'
+    | '/dashboard'
+    | '/explore'
+    | '/dashboard/settings'
+    | '/dashboard/tickets'
+    | '/dashboard/transactions'
+    | '/dashboard/wallet'
+    | '/events/$eventId'
+    | '/dashboard/'
+    | '/dashboard/tickets/$ticketId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConnectRoute: typeof ConnectRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   ExploreRoute: typeof ExploreRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
 }
@@ -76,6 +173,13 @@ declare module '@tanstack/react-router' {
       path: '/explore'
       fullPath: '/explore'
       preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/connect': {
@@ -92,6 +196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/events/$eventId': {
       id: '/events/$eventId'
       path: '/events/$eventId'
@@ -99,15 +210,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsEventIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/wallet': {
+      id: '/dashboard/wallet'
+      path: '/wallet'
+      fullPath: '/dashboard/wallet'
+      preLoaderRoute: typeof DashboardWalletRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/transactions': {
+      id: '/dashboard/transactions'
+      path: '/transactions'
+      fullPath: '/dashboard/transactions'
+      preLoaderRoute: typeof DashboardTransactionsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/tickets': {
+      id: '/dashboard/tickets'
+      path: '/tickets'
+      fullPath: '/dashboard/tickets'
+      preLoaderRoute: typeof DashboardTicketsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/tickets/$ticketId': {
+      id: '/dashboard/tickets/$ticketId'
+      path: '/$ticketId'
+      fullPath: '/dashboard/tickets/$ticketId'
+      preLoaderRoute: typeof DashboardTicketsTicketIdRouteImport
+      parentRoute: typeof DashboardTicketsRoute
+    }
   }
 }
+
+interface DashboardTicketsRouteChildren {
+  DashboardTicketsTicketIdRoute: typeof DashboardTicketsTicketIdRoute
+}
+
+const DashboardTicketsRouteChildren: DashboardTicketsRouteChildren = {
+  DashboardTicketsTicketIdRoute: DashboardTicketsTicketIdRoute,
+}
+
+const DashboardTicketsRouteWithChildren =
+  DashboardTicketsRoute._addFileChildren(DashboardTicketsRouteChildren)
+
+interface DashboardRouteChildren {
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardTicketsRoute: typeof DashboardTicketsRouteWithChildren
+  DashboardTransactionsRoute: typeof DashboardTransactionsRoute
+  DashboardWalletRoute: typeof DashboardWalletRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardTicketsRoute: DashboardTicketsRouteWithChildren,
+  DashboardTransactionsRoute: DashboardTransactionsRoute,
+  DashboardWalletRoute: DashboardWalletRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConnectRoute: ConnectRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   ExploreRoute: ExploreRoute,
   EventsEventIdRoute: EventsEventIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
