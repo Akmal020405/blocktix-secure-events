@@ -1,10 +1,13 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { events, shortAddr } from "@/lib/dummy-data";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/StatusBadge";
-import { Calendar, Clock, MapPin, User, ShieldCheck, Database, FileCode2, QrCode } from "lucide-react";
+import { Calendar, Clock, MapPin, User, ShieldCheck, Database, FileCode2, QrCode, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { useStore } from "@/lib/store";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/events/$eventId")({
   loader: ({ params }) => {
@@ -34,14 +37,34 @@ export const Route = createFileRoute("/events/$eventId")({
 
 function EventDetail() {
   const event = Route.useLoaderData();
+  const navigate = useNavigate();
+  const buyTicket = useStore(s => s.buyTicket);
+  const [tier, setTier] = useState(event.tiers[0].name);
+  const [minting, setMinting] = useState(false);
+
+  const handleBuy = async () => {
+    setMinting(true);
+    toast.loading("Minting NFT ticket on Polygon...", { id: "mint" });
+    await new Promise(r => setTimeout(r, 1400));
+    const ticket = buyTicket(event.id, tier);
+    setMinting(false);
+    if (ticket) {
+      toast.success("Ticket minted to your wallet!", {
+        id: "mint",
+        description: `Token ID: ${ticket.id}`,
+      });
+      navigate({ to: "/dashboard/tickets/$ticketId", params: { ticketId: ticket.id } });
+    }
+  };
+
   return (
     <div>
       <Navbar />
       <div className="container mx-auto px-4 py-10 grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-8 animate-fade-in">
           <div className="rounded-3xl overflow-hidden border border-border relative h-72 md:h-96 grid-bg" style={{ background: event.poster }}>
             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-            <div className="absolute top-4 left-4 flex gap-2">
+            <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
               <StatusBadge variant="verified"><ShieldCheck className="h-3 w-3" />Blockchain Verified</StatusBadge>
               <StatusBadge variant="minted">NFT Ticket</StatusBadge>
             </div>
@@ -51,14 +74,14 @@ function EventDetail() {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {[
               { i: Calendar, l: "Date", v: event.date },
               { i: Clock, l: "Time", v: event.time },
               { i: MapPin, l: "Location", v: event.location },
               { i: User, l: "Organizer", v: event.organizer },
             ].map(x => (
-              <div key={x.l} className="rounded-xl border border-border bg-card/50 p-4">
+              <div key={x.l} className="rounded-xl border border-border bg-card/50 p-4 hover:border-neon-blue/30 transition">
                 <x.i className="h-4 w-4 text-neon-cyan mb-2" />
                 <div className="text-[10px] uppercase text-muted-foreground tracking-wider">{x.l}</div>
                 <div className="text-sm font-medium mt-0.5">{x.v}</div>
@@ -117,9 +140,8 @@ function EventDetail() {
           </div>
         </div>
 
-        {/* RIGHT: Buy panel */}
-        <aside className="space-y-4">
-          <div className="glass rounded-2xl p-6 border border-neon-purple/20 sticky top-20">
+        <aside className="space-y-4 animate-fade-in">
+          <div className="glass rounded-2xl p-6 border border-neon-purple/20 lg:sticky lg:top-20">
             <div className="text-xs uppercase tracking-wider text-muted-foreground">Tickets</div>
             <div className="text-3xl font-bold neon-text mt-1">From ${event.priceFrom}</div>
             <div className="text-xs text-muted-foreground mt-1">{event.available.toLocaleString()} of {event.total.toLocaleString()} available</div>
@@ -127,11 +149,24 @@ function EventDetail() {
             <div className="mt-5 space-y-3">
               {event.tiers.map((t: typeof event.tiers[number]) => {
                 const sold = t.sold >= t.quota;
+                const selected = tier === t.name;
                 return (
-                  <button key={t.name} disabled={sold} className="w-full text-left p-4 rounded-xl border border-border hover:border-neon-blue/40 transition disabled:opacity-50 disabled:cursor-not-allowed bg-background/40">
+                  <button
+                    key={t.name}
+                    disabled={sold}
+                    onClick={() => setTier(t.name)}
+                    className={`w-full text-left p-4 rounded-xl border transition disabled:opacity-50 disabled:cursor-not-allowed ${
+                      selected
+                        ? "border-neon-blue/60 bg-neon-blue/10 shadow-[0_0_20px_oklch(0.72_0.22_265/0.2)]"
+                        : "border-border hover:border-neon-blue/40 bg-background/40"
+                    }`}
+                  >
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-semibold">{t.name}</div>
+                        <div className="font-semibold flex items-center gap-2">
+                          {t.name}
+                          {selected && <span className="h-2 w-2 rounded-full bg-neon-cyan" />}
+                        </div>
                         <div className="text-xs text-muted-foreground mt-0.5">{(t.quota - t.sold).toLocaleString()} left</div>
                       </div>
                       <div className="text-right">
@@ -144,8 +179,16 @@ function EventDetail() {
               })}
             </div>
 
-            <Button className="w-full mt-5 bg-gradient-to-r from-neon-blue to-neon-purple shadow-neon text-primary-foreground">
-              <QrCode className="h-4 w-4 mr-2" /> Buy & Mint Ticket
+            <Button
+              onClick={handleBuy}
+              disabled={minting}
+              className="w-full mt-5 bg-gradient-to-r from-neon-blue to-neon-purple shadow-neon text-primary-foreground hover:opacity-90"
+            >
+              {minting ? (
+                <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Minting on-chain...</>
+              ) : (
+                <><QrCode className="h-4 w-4 mr-2" />Buy & Mint Ticket</>
+              )}
             </Button>
             <div className="mt-3 text-[11px] text-center text-muted-foreground">
               Ticket will be minted to your wallet on Polygon
