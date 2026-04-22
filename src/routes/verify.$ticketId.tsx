@@ -20,7 +20,12 @@ export const Route = createFileRoute("/verify/$ticketId")({
 function VerifyResult() {
   const { kind, ticket } = Route.useLoaderData();
 
-  const cfg = {
+  const cfgs = {
+    valid: { color: "success", Icon: CheckCircle2, title: "Ticket Valid", msg: "Smart contract verified. This ticket is genuine and active." },
+    used: { color: "warning", Icon: AlertTriangle, title: "Ticket Already Used", msg: "This ticket was checked in previously. Cannot be reused." },
+    invalid: { color: "destructive", Icon: XCircle, title: "Invalid Ticket", msg: "No matching token found on the event contract. Possible counterfeit." },
+  } as const;
+  const cfg = cfgs[kind];
     valid: { color: "success", Icon: CheckCircle2, title: "Ticket Valid", msg: "Smart contract verified. This ticket is genuine and active." },
     used: { color: "warning", Icon: AlertTriangle, title: "Ticket Already Used", msg: "This ticket was checked in previously. Cannot be reused." },
     invalid: { color: "destructive", Icon: XCircle, title: "Invalid Ticket", msg: "No matching token found on the event contract. Possible counterfeit." },
