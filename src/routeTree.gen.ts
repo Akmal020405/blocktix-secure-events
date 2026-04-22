@@ -9,38 +9,367 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ValidatorRouteImport } from './routes/validator'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ConnectRouteImport } from './routes/connect'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ValidatorIndexRouteImport } from './routes/validator.index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as VerifyTicketIdRouteImport } from './routes/verify.$ticketId'
+import { Route as ValidatorSettingsRouteImport } from './routes/validator.settings'
+import { Route as ValidatorHistoryRouteImport } from './routes/validator.history'
+import { Route as ValidatorEventsRouteImport } from './routes/validator.events'
+import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
+import { Route as DashboardWalletRouteImport } from './routes/dashboard.wallet'
+import { Route as DashboardTransactionsRouteImport } from './routes/dashboard.transactions'
+import { Route as DashboardTicketsRouteImport } from './routes/dashboard.tickets'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as AdminTicketsRouteImport } from './routes/admin.tickets'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminMintRouteImport } from './routes/admin.mint'
+import { Route as AdminEventsRouteImport } from './routes/admin.events'
+import { Route as AdminCreateRouteImport } from './routes/admin.create'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as DashboardTicketsTicketIdRouteImport } from './routes/dashboard.tickets.$ticketId'
 
+const ValidatorRoute = ValidatorRouteImport.update({
+  id: '/validator',
+  path: '/validator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConnectRoute = ConnectRouteImport.update({
+  id: '/connect',
+  path: '/connect',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ValidatorIndexRoute = ValidatorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ValidatorRoute,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const VerifyTicketIdRoute = VerifyTicketIdRouteImport.update({
+  id: '/verify/$ticketId',
+  path: '/verify/$ticketId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValidatorSettingsRoute = ValidatorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ValidatorRoute,
+} as any)
+const ValidatorHistoryRoute = ValidatorHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => ValidatorRoute,
+} as any)
+const ValidatorEventsRoute = ValidatorEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => ValidatorRoute,
+} as any)
+const EventsEventIdRoute = EventsEventIdRouteImport.update({
+  id: '/events/$eventId',
+  path: '/events/$eventId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardWalletRoute = DashboardWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTransactionsRoute = DashboardTransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTicketsRoute = DashboardTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const AdminTicketsRoute = AdminTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMintRoute = AdminMintRouteImport.update({
+  id: '/mint',
+  path: '/mint',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventsRoute = AdminEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCreateRoute = AdminCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
+const DashboardTicketsTicketIdRoute =
+  DashboardTicketsTicketIdRouteImport.update({
+    id: '/$ticketId',
+    path: '/$ticketId',
+    getParentRoute: () => DashboardTicketsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/connect': typeof ConnectRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/explore': typeof ExploreRoute
+  '/validator': typeof ValidatorRouteWithChildren
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/create': typeof AdminCreateRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/mint': typeof AdminMintRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tickets': typeof DashboardTicketsRouteWithChildren
+  '/dashboard/transactions': typeof DashboardTransactionsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
+  '/events/$eventId': typeof EventsEventIdRoute
+  '/validator/events': typeof ValidatorEventsRoute
+  '/validator/history': typeof ValidatorHistoryRoute
+  '/validator/settings': typeof ValidatorSettingsRoute
+  '/verify/$ticketId': typeof VerifyTicketIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/validator/': typeof ValidatorIndexRoute
+  '/dashboard/tickets/$ticketId': typeof DashboardTicketsTicketIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/connect': typeof ConnectRoute
+  '/explore': typeof ExploreRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/create': typeof AdminCreateRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/mint': typeof AdminMintRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tickets': typeof DashboardTicketsRouteWithChildren
+  '/dashboard/transactions': typeof DashboardTransactionsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
+  '/events/$eventId': typeof EventsEventIdRoute
+  '/validator/events': typeof ValidatorEventsRoute
+  '/validator/history': typeof ValidatorHistoryRoute
+  '/validator/settings': typeof ValidatorSettingsRoute
+  '/verify/$ticketId': typeof VerifyTicketIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/validator': typeof ValidatorIndexRoute
+  '/dashboard/tickets/$ticketId': typeof DashboardTicketsTicketIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/connect': typeof ConnectRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/explore': typeof ExploreRoute
+  '/validator': typeof ValidatorRouteWithChildren
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/create': typeof AdminCreateRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/mint': typeof AdminMintRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tickets': typeof DashboardTicketsRouteWithChildren
+  '/dashboard/transactions': typeof DashboardTransactionsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
+  '/events/$eventId': typeof EventsEventIdRoute
+  '/validator/events': typeof ValidatorEventsRoute
+  '/validator/history': typeof ValidatorHistoryRoute
+  '/validator/settings': typeof ValidatorSettingsRoute
+  '/verify/$ticketId': typeof VerifyTicketIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/validator/': typeof ValidatorIndexRoute
+  '/dashboard/tickets/$ticketId': typeof DashboardTicketsTicketIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/connect'
+    | '/dashboard'
+    | '/explore'
+    | '/validator'
+    | '/admin/analytics'
+    | '/admin/create'
+    | '/admin/events'
+    | '/admin/mint'
+    | '/admin/settings'
+    | '/admin/tickets'
+    | '/dashboard/settings'
+    | '/dashboard/tickets'
+    | '/dashboard/transactions'
+    | '/dashboard/wallet'
+    | '/events/$eventId'
+    | '/validator/events'
+    | '/validator/history'
+    | '/validator/settings'
+    | '/verify/$ticketId'
+    | '/admin/'
+    | '/dashboard/'
+    | '/validator/'
+    | '/dashboard/tickets/$ticketId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/connect'
+    | '/explore'
+    | '/admin/analytics'
+    | '/admin/create'
+    | '/admin/events'
+    | '/admin/mint'
+    | '/admin/settings'
+    | '/admin/tickets'
+    | '/dashboard/settings'
+    | '/dashboard/tickets'
+    | '/dashboard/transactions'
+    | '/dashboard/wallet'
+    | '/events/$eventId'
+    | '/validator/events'
+    | '/validator/history'
+    | '/validator/settings'
+    | '/verify/$ticketId'
+    | '/admin'
+    | '/dashboard'
+    | '/validator'
+    | '/dashboard/tickets/$ticketId'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/connect'
+    | '/dashboard'
+    | '/explore'
+    | '/validator'
+    | '/admin/analytics'
+    | '/admin/create'
+    | '/admin/events'
+    | '/admin/mint'
+    | '/admin/settings'
+    | '/admin/tickets'
+    | '/dashboard/settings'
+    | '/dashboard/tickets'
+    | '/dashboard/transactions'
+    | '/dashboard/wallet'
+    | '/events/$eventId'
+    | '/validator/events'
+    | '/validator/history'
+    | '/validator/settings'
+    | '/verify/$ticketId'
+    | '/admin/'
+    | '/dashboard/'
+    | '/validator/'
+    | '/dashboard/tickets/$ticketId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  ConnectRoute: typeof ConnectRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  ExploreRoute: typeof ExploreRoute
+  ValidatorRoute: typeof ValidatorRouteWithChildren
+  EventsEventIdRoute: typeof EventsEventIdRoute
+  VerifyTicketIdRoute: typeof VerifyTicketIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/validator': {
+      id: '/validator'
+      path: '/validator'
+      fullPath: '/validator'
+      preLoaderRoute: typeof ValidatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/connect': {
+      id: '/connect'
+      path: '/connect'
+      fullPath: '/connect'
+      preLoaderRoute: typeof ConnectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +377,223 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/validator/': {
+      id: '/validator/'
+      path: '/'
+      fullPath: '/validator/'
+      preLoaderRoute: typeof ValidatorIndexRouteImport
+      parentRoute: typeof ValidatorRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/verify/$ticketId': {
+      id: '/verify/$ticketId'
+      path: '/verify/$ticketId'
+      fullPath: '/verify/$ticketId'
+      preLoaderRoute: typeof VerifyTicketIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/validator/settings': {
+      id: '/validator/settings'
+      path: '/settings'
+      fullPath: '/validator/settings'
+      preLoaderRoute: typeof ValidatorSettingsRouteImport
+      parentRoute: typeof ValidatorRoute
+    }
+    '/validator/history': {
+      id: '/validator/history'
+      path: '/history'
+      fullPath: '/validator/history'
+      preLoaderRoute: typeof ValidatorHistoryRouteImport
+      parentRoute: typeof ValidatorRoute
+    }
+    '/validator/events': {
+      id: '/validator/events'
+      path: '/events'
+      fullPath: '/validator/events'
+      preLoaderRoute: typeof ValidatorEventsRouteImport
+      parentRoute: typeof ValidatorRoute
+    }
+    '/events/$eventId': {
+      id: '/events/$eventId'
+      path: '/events/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof EventsEventIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/wallet': {
+      id: '/dashboard/wallet'
+      path: '/wallet'
+      fullPath: '/dashboard/wallet'
+      preLoaderRoute: typeof DashboardWalletRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/transactions': {
+      id: '/dashboard/transactions'
+      path: '/transactions'
+      fullPath: '/dashboard/transactions'
+      preLoaderRoute: typeof DashboardTransactionsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/tickets': {
+      id: '/dashboard/tickets'
+      path: '/tickets'
+      fullPath: '/dashboard/tickets'
+      preLoaderRoute: typeof DashboardTicketsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/admin/tickets': {
+      id: '/admin/tickets'
+      path: '/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AdminTicketsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/mint': {
+      id: '/admin/mint'
+      path: '/mint'
+      fullPath: '/admin/mint'
+      preLoaderRoute: typeof AdminMintRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/events': {
+      id: '/admin/events'
+      path: '/events'
+      fullPath: '/admin/events'
+      preLoaderRoute: typeof AdminEventsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/create': {
+      id: '/admin/create'
+      path: '/create'
+      fullPath: '/admin/create'
+      preLoaderRoute: typeof AdminCreateRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/dashboard/tickets/$ticketId': {
+      id: '/dashboard/tickets/$ticketId'
+      path: '/$ticketId'
+      fullPath: '/dashboard/tickets/$ticketId'
+      preLoaderRoute: typeof DashboardTicketsTicketIdRouteImport
+      parentRoute: typeof DashboardTicketsRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminCreateRoute: typeof AdminCreateRoute
+  AdminEventsRoute: typeof AdminEventsRoute
+  AdminMintRoute: typeof AdminMintRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTicketsRoute: typeof AdminTicketsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminCreateRoute: AdminCreateRoute,
+  AdminEventsRoute: AdminEventsRoute,
+  AdminMintRoute: AdminMintRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTicketsRoute: AdminTicketsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface DashboardTicketsRouteChildren {
+  DashboardTicketsTicketIdRoute: typeof DashboardTicketsTicketIdRoute
+}
+
+const DashboardTicketsRouteChildren: DashboardTicketsRouteChildren = {
+  DashboardTicketsTicketIdRoute: DashboardTicketsTicketIdRoute,
+}
+
+const DashboardTicketsRouteWithChildren =
+  DashboardTicketsRoute._addFileChildren(DashboardTicketsRouteChildren)
+
+interface DashboardRouteChildren {
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardTicketsRoute: typeof DashboardTicketsRouteWithChildren
+  DashboardTransactionsRoute: typeof DashboardTransactionsRoute
+  DashboardWalletRoute: typeof DashboardWalletRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardTicketsRoute: DashboardTicketsRouteWithChildren,
+  DashboardTransactionsRoute: DashboardTransactionsRoute,
+  DashboardWalletRoute: DashboardWalletRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+interface ValidatorRouteChildren {
+  ValidatorEventsRoute: typeof ValidatorEventsRoute
+  ValidatorHistoryRoute: typeof ValidatorHistoryRoute
+  ValidatorSettingsRoute: typeof ValidatorSettingsRoute
+  ValidatorIndexRoute: typeof ValidatorIndexRoute
+}
+
+const ValidatorRouteChildren: ValidatorRouteChildren = {
+  ValidatorEventsRoute: ValidatorEventsRoute,
+  ValidatorHistoryRoute: ValidatorHistoryRoute,
+  ValidatorSettingsRoute: ValidatorSettingsRoute,
+  ValidatorIndexRoute: ValidatorIndexRoute,
+}
+
+const ValidatorRouteWithChildren = ValidatorRoute._addFileChildren(
+  ValidatorRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  ConnectRoute: ConnectRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  ExploreRoute: ExploreRoute,
+  ValidatorRoute: ValidatorRouteWithChildren,
+  EventsEventIdRoute: EventsEventIdRoute,
+  VerifyTicketIdRoute: VerifyTicketIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
