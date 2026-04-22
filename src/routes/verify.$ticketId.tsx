@@ -25,7 +25,7 @@ function VerifyResult() {
     used: { color: "warning", Icon: AlertTriangle, title: "Ticket Already Used", msg: "This ticket was checked in previously. Cannot be reused." },
     invalid: { color: "destructive", Icon: XCircle, title: "Invalid Ticket", msg: "No matching token found on the event contract. Possible counterfeit." },
   } as const;
-  const cfg = cfgs[kind];
+  const cfg = cfgs[kind as keyof typeof cfgs];
 
   return (
     <div>
